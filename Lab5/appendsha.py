@@ -1,4 +1,5 @@
 import hashlib
+from pickle import TRUE
 import sys
 import shutil
 import secrets
@@ -19,6 +20,7 @@ def fileDigest(file):
 
 
 def appendHex():
+    hex = secrets.token_hex(4)
     original = r"{}".format(sys.argv[1])
     copia = r"{}SHA.txt".format(sys.argv[1][:-4])
     shutil.copyfile(original, copia)
@@ -30,23 +32,20 @@ def appendHex():
     return copia
 
 
-hex = secrets.token_hex(4)
 
 try:
     # Coge el archivo leyendo del argumento pasado.
 
     # Crear copia del archivo
     file = appendHex()
-    print(file)
     digest = fileDigest(file)
-    print(digest)
-    print(digest[0])
-    '''while digest[0] != 0:
+    while TRUE:
         os.remove(file)
         file = appendHex()
         digest = fileDigest(file)
-        print(digest[0])
-    print(digest)'''
+        if digest [0] == "0":
+            break
+    print(digest)
 
 except Exception:
     print(ROJO + "No se ha podido encontrar el fichero\n" + BLANCO)
