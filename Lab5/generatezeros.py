@@ -7,16 +7,10 @@ import secrets
 import os
 import time
 
-# Códigos de colores.
-AMARILLO = '\033[93m'
-ROJO = '\033[91m'
-BLANCO = '\033[0m'
-
 
 def fileDigest(file):
     with open(file, 'rb') as f:
         bytes = f.read()
-        # Calcula el resumen
         resumen = hashlib.sha256(bytes).hexdigest()
     return resumen
 
@@ -27,7 +21,6 @@ def appendHex():
     copia = r"{}SHA.txt".format(sys.argv[1][:-4])
     shutil.copyfile(original, copia)
     with open("{}SHA.txt".format(sys.argv[1][:-4]), 'a') as f:
-        # Guarda el documento con la línea adicional.
         f.write("{}".format(hex))
         f.write(" ")
         f.write("G01")
@@ -39,8 +32,9 @@ def copybigestzeros(file):
     copia = r"{}ZEROS.txt".format(sys.argv[1][:-4])
     shutil.copyfile(original, copia)
 
+
 try:
-    start_time = time.time();
+    start_time = time.time()
     file = appendHex()
     digest = fileDigest(file)
     copybigestzeros(file)
