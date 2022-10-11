@@ -45,11 +45,8 @@ try:
         digest = fileDigest(file)
         if digest.startswith(zeros):
             zeros += "0"
-            print(zeros)
-            print(digest)
             copybigestzeros(file)
     print(digest)
-    print(zeros)
 except Exception:
-    print(ROJO + "No se ha podido encontrar el fichero\n" + BLANCO)
+    print("No se ha podido encontrar el fichero\n")
     exit(1)
