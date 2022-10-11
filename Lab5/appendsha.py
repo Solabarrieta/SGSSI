@@ -31,8 +31,6 @@ def appendHex():
         f.write("G01")
     return copia
 
-
-
 try:
     # Coge el archivo leyendo del argumento pasado.
 
