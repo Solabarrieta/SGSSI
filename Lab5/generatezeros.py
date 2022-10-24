@@ -22,8 +22,6 @@ def appendHex():
     shutil.copyfile(original, copia)
     with open("{}SHA.txt".format(sys.argv[1][:-4]), 'a') as f:
         f.write("{}".format(hex))
-        f.write(" ")
-        f.write("G01")
     return copia
 
 
@@ -44,9 +42,12 @@ try:
         file = appendHex()
         digest = fileDigest(file)
         if digest.startswith(zeros):
+            print("Prefijo: "+zeros)
             zeros += "0"
             copybigestzeros(file)
-    print(digest)
+            digestWithZeros = fileDigest(file)
+    print("Longitud del prefijo: ", len(zeros[:-1]))
+    print(digestWithZeros)
 except Exception:
     print("No se ha podido encontrar el fichero\n")
     exit(1)
