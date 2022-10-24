@@ -4,7 +4,6 @@ from pickle import TRUE
 import sys
 import shutil
 import secrets
-import os
 import time
 
 
@@ -33,12 +32,8 @@ def copybigestzeros(file):
 
 try:
     start_time = time.time()
-    file = appendHex()
-    digest = fileDigest(file)
-    copybigestzeros(file)
     zeros = "0"
     while time.time() - start_time < 60:
-        os.remove(file)
         file = appendHex()
         digest = fileDigest(file)
         if digest.startswith(zeros):
