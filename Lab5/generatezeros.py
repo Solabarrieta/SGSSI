@@ -43,6 +43,6 @@ try:
             digestWithZeros = fileDigest(file)
     print("Longitud del prefijo: ", len(zeros[:-1]))
     print(digestWithZeros)
-except Exception:
-    print("No se ha podido encontrar el fichero\n")
+except Exception as e:
+    print('Error: ', e)
     exit(1)
