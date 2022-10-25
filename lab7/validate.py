@@ -60,7 +60,7 @@ def mineInAMinute(file):
     try:
         start_time = time.time()
         zeros = "0"
-        while time.time() - start_time < 10:
+        while time.time() - start_time < 20:
             file = appendHex()
             digest = fileDigest(file)
             if digest.startswith(zeros):
@@ -75,8 +75,7 @@ def mineInAMinute(file):
 
 
 def checkPoW(hashsum):
-    pattern = re.compile("^[0]+\.$")
-    powcheck = bool(pattern.match(hashsum))
+    powcheck = hashsum.startswith("00")
     return powcheck
 
 
@@ -84,14 +83,18 @@ try:
 
     header1 = getHeader(sys.argv[1])
     header2 = getHeader(sys.argv[2])
+    equalHeaders = header1 == header2
     validNonce = validateNonce(sys.argv[2])
     hashsum = mineInAMinute(sys.argv[2])
 
     proof = checkPoW(hashsum)
-    print(header1 == header2)
-    print("valid nonce: ", validNonce)
-    print(hashsum)
-    print(proof)
+    print("\n")
+    print("###### Resultado ######")
+    print('Cabeceras iguales: ', equalHeaders)
+    print("Nonce valido: ", validNonce)
+    print('Digest: ', hashsum)
+    print('Comienza por ceros: ', proof)
+    print("El bloque es valido: ", equalHeaders and validNonce and proof)
 except Exception as e:
     print(e)
     exit(1)
