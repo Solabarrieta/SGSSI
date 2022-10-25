@@ -21,12 +21,14 @@ def appendHex():
     shutil.copyfile(original, copia)
     with open("{}SHA.txt".format(sys.argv[1][:-4]), 'a') as f:
         f.write("{}".format(hex))
+        f.write(" ")
+        f.write("G01")
     return copia
 
 
 def copybigestzeros(file):
     original = r"{}".format(file)
-    copia = r"{}ZEROS.txt".format(sys.argv[1][:-4])
+    copia = r"{}AAAA.txt".format(sys.argv[1][:-4])
     shutil.copyfile(original, copia)
 
 
