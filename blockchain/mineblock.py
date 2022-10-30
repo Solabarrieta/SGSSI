@@ -1,9 +1,10 @@
 import hashlib
+from operator import concat
 from pickle import TRUE
 import sys
 import shutil
 import secrets
-import os
+import time
 
 
 def fileDigest(file):
@@ -25,17 +26,25 @@ def appendHex():
     return copia
 
 
+def copybigestzeros(file):
+    original = r"{}".format(file)
+    copia = r"{}.OSOL.txt".format(sys.argv[1][:-4])
+    shutil.copyfile(original, copia)
+
+
 try:
-    file = appendHex()
-    digest = fileDigest(file)
-    while TRUE:
-        os.remove(file)
+    start_time = time.time()
+    zeros = "0"
+    while time.time() - start_time < 60:
         file = appendHex()
         digest = fileDigest(file)
-        if digest[0] == "0":
-            break
-    print(digest)
-
-except Exception:
-    print("No se ha podido encontrar el fichero\n")
+        if digest.startswith(zeros):
+            print("Prefijo: "+zeros)
+            zeros += "0"
+            copybigestzeros(file)
+            digestWithZeros = fileDigest(file)
+    print("Longitud del prefijo: ", len(zeros[:-1]))
+    print(digestWithZeros)
+except Exception as e:
+    print('Error: ', e)
     exit(1)

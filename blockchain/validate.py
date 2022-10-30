@@ -85,16 +85,17 @@ try:
     header2 = getHeader(sys.argv[2])
     equalHeaders = header1 == header2
     validNonce = validateNonce(sys.argv[2])
-    hashsum = mineInAMinute(sys.argv[2])
+    hashsum = fileDigest(sys.argv[2])
 
     proof = checkPoW(hashsum)
     print("\n")
     print("###### Resultado ######")
     print('Cabeceras iguales: ', equalHeaders)
     print("Nonce valido: ", validNonce)
-    print('Digest: ', hashsum)
+    #print('Digest: ', hashsum)
     print('Comienza por ceros: ', proof)
     print("El bloque es valido: ", equalHeaders and validNonce and proof)
+    print("Digest del bloque minado: ", hashsum)
 except Exception as e:
     print(e)
     exit(1)
