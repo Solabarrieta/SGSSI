@@ -79,23 +79,40 @@ def checkPoW(hashsum):
     return powcheck
 
 
-try:
-
-    header1 = getHeader(sys.argv[1])
-    header2 = getHeader(sys.argv[2])
+def isBlockValid(originalFile, minedFile):
+    header1 = getHeader(originalFile)
+    header2 = getHeader(minedFile)
     equalHeaders = header1 == header2
-    validNonce = validateNonce(sys.argv[2])
-    hashsum = fileDigest(sys.argv[2])
-
+    validNonce = validateNonce(minedFile)
+    hashsum = fileDigest(minedFile)
     proof = checkPoW(hashsum)
+    isValid = equalHeaders and validNonce and proof
+    return isValid, hashsum, equalHeaders, validNonce, proof
+
+
+def countZeros(hashsum):
+    count = 0
+    for index in range(len(hashsum)):
+        if hashsum[index] == "0":
+            count += 1
+        if hashsum[index] != "0":
+            break
+    return count
+
+
+try:
+    isValid, digest, equalHeaders, validNonce, proof = isBlockValid(
+        sys.argv[1], sys.argv[2])
     print("\n")
     print("###### Resultado ######")
-    print('Cabeceras iguales: ', equalHeaders)
-    print("Nonce valido: ", validNonce)
-    #print('Digest: ', hashsum)
-    print('Comienza por ceros: ', proof)
-    print("El bloque es valido: ", equalHeaders and validNonce and proof)
-    print("Digest del bloque minado: ", hashsum)
+    print("El bloque es valido: ", isValid)
+    if isValid:
+        print("Digest del bloque minado: ", digest)
+        print("Cuantos ceros: ", countZeros(digest))
+    else:
+        print("Cabeceras iguales: ", equalHeaders)
+        print("Nonce valido: ", validNonce)
+        print("Empieza por ceros: ", proof)
 except Exception as e:
     print(e)
     exit(1)
