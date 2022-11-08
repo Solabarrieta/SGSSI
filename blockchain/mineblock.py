@@ -5,6 +5,7 @@ import sys
 import shutil
 import secrets
 import time
+import os
 
 
 def fileDigest(file):
@@ -28,7 +29,7 @@ def appendHex():
 
 def copybigestzeros(file):
     original = r"{}".format(file)
-    copia = r"{}.OSOL.txt".format(sys.argv[1][:-4])
+    copia = r"./minedblocks{}.OSOL.txt".format(sys.argv[1][:-4][7:])
     shutil.copyfile(original, copia)
 
 
@@ -45,6 +46,7 @@ try:
             digestWithZeros = fileDigest(file)
     print("Longitud del prefijo: ", len(zeros[:-1]))
     print(digestWithZeros)
+    os.remove(file)
 except Exception as e:
     print('Error: ', e)
     exit(1)
