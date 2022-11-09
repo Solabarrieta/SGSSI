@@ -36,7 +36,7 @@ def copybigestzeros(file):
 try:
     start_time = time.time()
     zeros = "0"
-    while time.time() - start_time < 60:
+    while time.time() - start_time < 300:
         file = appendHex()
         digest = fileDigest(file)
         if digest.startswith(zeros):
