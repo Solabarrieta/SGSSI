@@ -6,6 +6,7 @@ from pickle import TRUE
 import shutil
 import secrets
 import time
+import os
 
 
 def getHeader(file):
@@ -23,7 +24,7 @@ def getHeader(file):
 
 def validateNonce(file):
     valid = False
-    pattern = re.compile("^[a-f0-9]{8} G[0-3][0-9]$")
+    pattern = re.compile("^[a-f0-9]{8} G[a-f0-9]{3}$")
     with open(file, "r") as input:
         for line in input:
             if bool(pattern.match(line)):
@@ -92,7 +93,7 @@ def isBlockValid(originalFile, minedFile):
 
 def countZeros(hashsum):
     count = 0
-    for index in range(len(hashsum)):
+    for index in range(len(hashsum)-1):
         if hashsum[index] == "0":
             count += 1
         if hashsum[index] != "0":
@@ -114,5 +115,7 @@ try:
         print("Nonce valido: ", validNonce)
         print("Empieza por ceros: ", proof)
 except Exception as e:
-    print(e)
+    exc_type, exc_obj, exc_tb = sys.exc_info()
+    fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+    print(exc_type, fname, exc_tb.tb_lineno)
     exit(1)

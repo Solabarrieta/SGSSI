@@ -23,20 +23,20 @@ def appendHex():
     with open("{}SHA.txt".format(sys.argv[1][:-4]), 'a') as f:
         f.write("{}".format(hex))
         f.write(" ")
-        f.write("G01")
+        f.write("Ge59")
     return copia
 
 
 def copybigestzeros(file):
     original = r"{}".format(file)
-    copia = r"./minedblocks{}.OSOL.txt".format(sys.argv[1][:-4][7:])
+    copia = r"./minedblocks{}.e59.txt".format(sys.argv[1][:-4][7:])
     shutil.copyfile(original, copia)
 
 
 try:
     start_time = time.time()
     zeros = "0"
-    while time.time() - start_time < 300:
+    while time.time() - start_time < 60:
         file = appendHex()
         digest = fileDigest(file)
         if digest.startswith(zeros):
